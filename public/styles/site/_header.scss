@@ -1,0 +1,39 @@
+#header {
+	margin-top: 15px;
+
+	.container {
+		display: flex;
+		align-items: center;
+
+
+		.links {
+			a {
+				margin: 0em 1em 0em 1em;
+			}
+
+			.active {
+				font-weight: bold;
+			}
+		}
+	}
+
+	@include media-breakpoint-down(sm) {
+		.container {
+			flex-direction: column;
+		}
+
+		.links {
+			margin-top: 1em;
+		}
+	}
+
+	@include media-breakpoint-up(md) {
+		.container {
+			flex-direction: row;
+		}
+
+		.links{
+			margin-left: auto;
+		}
+	}
+}

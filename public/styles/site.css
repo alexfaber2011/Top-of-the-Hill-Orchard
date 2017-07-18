@@ -6000,3 +6000,23 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   display: block;
   max-width: 100%;
   height: auto; }
+
+#header {
+  margin-top: 15px; }
+  #header .container {
+    display: flex;
+    align-items: center; }
+    #header .container .links a {
+      margin: 0em 1em 0em 1em; }
+    #header .container .links .active {
+      font-weight: bold; }
+  @media (max-width: 767px) {
+    #header .container {
+      flex-direction: column; }
+    #header .links {
+      margin-top: 1em; } }
+  @media (min-width: 768px) {
+    #header .container {
+      flex-direction: row; }
+    #header .links {
+      margin-left: auto; } }
