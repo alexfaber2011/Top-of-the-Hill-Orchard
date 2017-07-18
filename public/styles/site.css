@@ -5992,6 +5992,8 @@ body {
 
 #header {
   padding-top: 15px; }
+  #header a {
+    color: black; }
   #header .container {
     display: flex;
     align-items: center; }
@@ -6000,10 +6002,12 @@ body {
     #header .container .links .active {
       font-weight: bold; }
   @media (max-width: 767px) {
-    #header .container {
-      flex-direction: column; }
-    #header .links {
-      margin-top: 1em; } }
+    #header {
+      padding-bottom: 1em; }
+      #header .container {
+        flex-direction: column; }
+      #header .links {
+        margin-top: 1em; } }
   @media (min-width: 768px) {
     #header .container {
       flex-direction: row; }
@@ -6054,7 +6058,6 @@ body {
     #home .content .cell p {
       margin-bottom: 2em; }
   #home .blue-separator {
-    margin-top: 2em;
     position: relative;
     width: 100%;
     height: 16px;
@@ -6065,7 +6068,7 @@ html {
   background: #455F70; }
 
 body {
-  background: url("../images/thomas-kelley-74109.jpg");
+  background: url("../images/apples_2560_o40.jpg");
   background-size: 100% auto;
   background-repeat: no-repeat; }
 

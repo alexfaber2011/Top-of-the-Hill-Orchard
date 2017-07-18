@@ -1,4 +1,8 @@
 #header {
+	a{
+		color: black;
+	}
+
 	padding-top: 15px;
 
 	.container {
@@ -18,6 +22,8 @@
 	}
 
 	@include media-breakpoint-down(sm) {
+		padding-bottom: 1em;
+		
 		.container {
 			flex-direction: column;
 		}
