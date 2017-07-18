@@ -17,7 +17,11 @@
 
 // Site Styles
 // ===========
+body {
+  font-family: 'Playfair Display', serif;
+}
 
 // Add your own site style includes here
-@import "site/layout";
 @import "site/header";
+@import "site/home";
+@import "site/layout";

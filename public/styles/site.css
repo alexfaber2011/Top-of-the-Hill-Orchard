@@ -5987,19 +5987,8 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   .hidden-print {
     display: none !important; } }
 
-#header {
-  margin-top: 30px; }
-
-#footer {
-  margin-top: 30px;
-  border-top: 1px solid #eeeeee;
-  padding-top: 30px;
-  color: #777777; }
-
-.gallery-image img {
-  display: block;
-  max-width: 100%;
-  height: auto; }
+body {
+  font-family: 'Playfair Display', serif; }
 
 #header {
   margin-top: 15px; }
@@ -6020,3 +6009,22 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
       flex-direction: row; }
     #header .links {
       margin-left: auto; } }
+
+.main-image {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: -99;
+  width: 100%;
+  opacity: 0.4; }
+
+#footer {
+  margin-top: 30px;
+  border-top: 1px solid #eeeeee;
+  padding-top: 30px;
+  color: #777777; }
+
+.gallery-image img {
+  display: block;
+  max-width: 100%;
+  height: auto; }
