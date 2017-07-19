@@ -1,0 +1,28 @@
+.page-title {
+	position: relative;
+
+	.container {
+		position: relative;
+		height: 150px;
+		overflow: hidden;
+
+		@include media-breakpoint-down(sm) {
+			height: 50px;
+		}
+
+		h1 {
+			font-size: 5em;
+			font-weight: bold;
+			margin: 0;
+			padding: 0;
+			color: $blue;
+			position: absolute;
+			left: 0px;
+			bottom: -15px;
+
+			@include media-breakpoint-down(sm) {
+				font-size: 4em;
+			}
+		}
+	}
+}

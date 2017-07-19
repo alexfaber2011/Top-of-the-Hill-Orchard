@@ -1,4 +1,5 @@
 extends ../layouts/default
+include ../mixins/page-title
 
 mixin post(post)
 	.post(data-ks-editable=editable(user, { list: 'Post', id: post.id }))
@@ -22,11 +23,8 @@ mixin post(post)
 		if post.content.extended
 			p.read-more: a(href='/blog/post/' + post.slug) Read more...
 
-block intro
-	.container
-		h1= data.category ? data.category.name : 'Blog'
-
 block content
+	+page-title('Blog')
 	.container: .row
 		.col-sm-8.col-md-9
 			if filters.category && !data.category

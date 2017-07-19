@@ -21,7 +21,16 @@ body {
   font-family: 'Playfair Display', serif;
 }
 
+.blue-separator {
+  position: relative;
+  width: 100%;
+  height: 16px;
+  background-color: $blue;
+  box-shadow: $drop-shadow;
+}
+
 // Add your own site style includes here
 @import "site/header";
 @import "site/home";
 @import "site/layout";
+@import "site/page_title";

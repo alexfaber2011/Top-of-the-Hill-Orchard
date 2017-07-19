@@ -1,9 +1,10 @@
 extends ../layouts/default
+include ../mixins/page-title
 
 block content
 	#home
 		#photos.container
-		.blue-separator
+		+page-title('Welcome')
 		.content
 			.container
 				.row
