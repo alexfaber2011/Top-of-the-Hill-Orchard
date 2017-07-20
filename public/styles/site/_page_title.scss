@@ -11,14 +11,14 @@
 		}
 
 		h1 {
-			font-size: 5em;
+			font-size: 3.5em;
 			font-weight: bold;
 			margin: 0;
 			padding: 0;
 			color: $blue;
 			position: absolute;
 			left: 0px;
-			bottom: -15px;
+			bottom: -13px;
 
 			@include media-breakpoint-down(sm) {
 				font-size: 4em;

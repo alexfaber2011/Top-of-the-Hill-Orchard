@@ -6118,14 +6118,14 @@ body {
       .page-title .container {
         height: 50px; } }
     .page-title .container h1 {
-      font-size: 5em;
+      font-size: 3.5em;
       font-weight: bold;
       margin: 0;
       padding: 0;
       color: #455F70;
       position: absolute;
       left: 0px;
-      bottom: -15px; }
+      bottom: -13px; }
       @media (max-width: 767px) {
         .page-title .container h1 {
           font-size: 4em; } }
