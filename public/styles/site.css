@@ -5990,12 +5990,17 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 body {
   font-family: 'Playfair Display', serif; }
 
+.image-wrapper .caption {
+  font-size: 0.8em;
+  text-align: center;
+  color: #B18282; }
+
 .blue-separator {
   position: relative;
   width: 100%;
   height: 16px;
   background-color: #455F70;
-  box-shadow: 0 2px 4px 0 #333; }
+  box-shadow: 0 2px 4px 0px #333; }
 
 #header {
   padding-top: 15px; }
@@ -6024,15 +6029,15 @@ body {
 #home {
   font-size: 18px;
   line-height: 1.5;
-  position: relative;
-  box-shadow: 0 2px 4px 0 #333; }
+  position: relative; }
   #home #photos {
     height: 250px; }
   @media (max-width: 767px) {
     #home #photos {
       display: none; } }
   #home .content {
-    background-color: white; }
+    background-color: white;
+    box-shadow: 0 2px 4px 0px #333; }
     #home .content #welcome {
       margin: 45px 0px 45px 0px;
       text-align: center; }
@@ -6064,6 +6069,22 @@ body {
       margin-bottom: 0.8em; }
     #home .content .cell p {
       margin-bottom: 2em; }
+
+#about {
+  font-size: 18px;
+  line-height: 1.5;
+  position: relative; }
+  #about .content {
+    box-shadow: 0 2px 4px 0px #333;
+    background-color: white; }
+    #about .content h1 {
+      text-align: center;
+      font-size: 3.5em;
+      padding: 25px 0px 10px 0px; }
+    #about .content h2 {
+      text-align: center;
+      font-size: 1.1em;
+      margin-bottom: 30px; }
 
 html {
   background: #455F70; }

@@ -21,6 +21,14 @@ body {
   font-family: 'Playfair Display', serif;
 }
 
+.image-wrapper {
+  .caption {
+    font-size: 0.8em;
+    text-align: center;
+    color: $red;
+  }
+}
+
 .blue-separator {
   position: relative;
   width: 100%;
@@ -32,5 +40,6 @@ body {
 // Add your own site style includes here
 @import "site/header";
 @import "site/home";
+@import "site/about";
 @import "site/layout";
 @import "site/page_title";

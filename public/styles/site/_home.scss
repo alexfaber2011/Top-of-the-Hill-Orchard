@@ -2,7 +2,6 @@
 	font-size: $font-size-base;
 	line-height: 1.5;
 	position: relative;
-	box-shadow: $drop-shadow;
 
 	#photos {
 		height: 250px;
@@ -16,6 +15,7 @@
 
 	.content {
 		background-color: white;
+		box-shadow: $drop-shadow;
 
 		#welcome {
 			margin: 45px 0px 45px 0px;
