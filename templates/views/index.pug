@@ -1,5 +1,6 @@
 extends ../layouts/default
 include ../mixins/page-title
+include ../mixins/separators
 
 block content
 	#home
@@ -14,12 +15,8 @@ block content
 							| perfect setting for such a thing.  
 							br 
 							| Join us!
-				.row
-					#learn-more-separator.col-sm-12
-						span.line
-						span Learn More
-						span.line
-				.row
+				+separator('Learn more')
+				.row(style="margin-top: 45px;")
 					.cell.col-lg-4
 						h2 What
 						p We’re a 
@@ -37,7 +34,6 @@ block content
 							br
 							| Sign up for our email list to be the first to know when the 
 							| apples are ready!
-							
 					.cell.col-lg-4
 						h2 Where
 						p

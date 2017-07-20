@@ -19,6 +19,19 @@
 // ===========
 body {
   font-family: 'Playfair Display', serif;
+  font-size: $font-size-base;
+	line-height: 1.5;
+}
+
+
+a {
+  color: $blue;
+  font-weight: bold;
+}
+
+.content {
+  box-shadow: $drop-shadow;
+  background-color: white;
 }
 
 .image-wrapper {
@@ -39,7 +52,9 @@ body {
 
 // Add your own site style includes here
 @import "site/header";
+@import "site/separators";
 @import "site/home";
 @import "site/about";
+@import "site/blog";
 @import "site/layout";
 @import "site/page_title";

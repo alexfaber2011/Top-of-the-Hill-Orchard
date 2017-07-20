@@ -5988,7 +5988,17 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
     display: none !important; } }
 
 body {
-  font-family: 'Playfair Display', serif; }
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  line-height: 1.5; }
+
+a {
+  color: #455F70;
+  font-weight: bold; }
+
+.content {
+  box-shadow: 0 2px 4px 0px #333;
+  background-color: white; }
 
 .image-wrapper .caption {
   font-size: 0.8em;
@@ -6004,15 +6014,13 @@ body {
 
 #header {
   padding-top: 15px; }
-  #header a {
-    color: black; }
   #header .container {
     display: flex;
     align-items: center; }
     #header .container .links a {
       margin: 0em 1em 0em 1em; }
     #header .container .links .active {
-      font-weight: bold; }
+      text-decoration: underline; }
   @media (max-width: 767px) {
     #header {
       padding-bottom: 1em; }
@@ -6026,6 +6034,17 @@ body {
     #header .links {
       margin-left: auto; } }
 
+.separator {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8em;
+  color: #B18282; }
+  .separator .line {
+    border-bottom: 1px solid #EBEBEB;
+    width: 33.3%; }
+
 #home {
   font-size: 18px;
   line-height: 1.5;
@@ -6035,56 +6054,74 @@ body {
   @media (max-width: 767px) {
     #home #photos {
       display: none; } }
-  #home .content {
-    background-color: white;
-    box-shadow: 0 2px 4px 0px #333; }
-    #home .content #welcome {
-      margin: 45px 0px 45px 0px;
-      text-align: center; }
-      #home .content #welcome h1 {
-        line-height: 1.5;
-        margin: 0px; }
-        @media (max-width: 767px) {
-          #home .content #welcome h1 {
-            font-size: 1.1em; } }
-        @media (min-width: 768px) {
-          #home .content #welcome h1 {
-            font-size: 1.5em;
-            margin-left: 50px;
-            margin-right: 50px; } }
-    #home .content #learn-more-separator {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.8em;
-      color: #B18282;
-      margin-bottom: 45px; }
-      #home .content #learn-more-separator .line {
-        border-bottom: 1px solid #EBEBEB;
-        width: 33.3%; }
-    #home .content .cell h2 {
-      font-size: 1.3em;
-      font-weight: bold;
-      margin-bottom: 0.8em; }
-    #home .content .cell p {
-      margin-bottom: 2em; }
+  #home #welcome {
+    margin: 45px 0px 45px 0px;
+    text-align: center; }
+    #home #welcome h1 {
+      line-height: 1.5;
+      margin: 0px; }
+      @media (max-width: 767px) {
+        #home #welcome h1 {
+          font-size: 1.1em; } }
+      @media (min-width: 768px) {
+        #home #welcome h1 {
+          font-size: 1.5em;
+          margin-left: 50px;
+          margin-right: 50px; } }
+  #home .cell h2 {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 0.8em; }
+  #home .cell p {
+    margin-bottom: 2em; }
 
 #about {
-  font-size: 18px;
-  line-height: 1.5;
   position: relative; }
-  #about .content {
-    box-shadow: 0 2px 4px 0px #333;
-    background-color: white; }
-    #about .content h1 {
-      text-align: center;
-      font-size: 3.5em;
-      padding: 25px 0px 10px 0px; }
-    #about .content h2 {
-      text-align: center;
-      font-size: 1.1em;
-      margin-bottom: 30px; }
+  #about h1 {
+    text-align: center;
+    font-size: 3.5em;
+    padding: 25px 0px 10px 0px; }
+  #about h2 {
+    text-align: center;
+    font-size: 1.1em;
+    margin-bottom: 30px; }
+
+#blog h1 {
+  font-size: 1.3em;
+  text-align: center;
+  padding: 1.5em 0em .2em 0em; }
+
+#blog h2 {
+  font-size: 1em;
+  text-align: center;
+  padding: .2em 0em .2em 0em; }
+
+#blog .categories {
+  padding-bottom: 1.5em; }
+  #blog .categories .category {
+    text-align: center;
+    font-size: 0.8em; }
+
+#blog .post {
+  display: flex;
+  flex-direction: row;
+  padding: 2em 0em 2em 0em;
+  border-bottom: 1px solid #EBEBEB; }
+  #blog .post .image-wrapper {
+    width: 200px;
+    margin-right: 1em; }
+    #blog .post .image-wrapper img {
+      width: 100%; }
+  #blog .post .post-content {
+    flex: 1; }
+    #blog .post .post-content a.title {
+      font-size: 1.1em; }
+    #blog .post .post-content .date {
+      font-size: 0.8em;
+      color: #B18282; }
+
+#blog .post:last-child {
+  margin-bottom: 1em; }
 
 html {
   background: #455F70; }
@@ -6117,7 +6154,7 @@ body {
     @media (max-width: 767px) {
       .page-title .container {
         height: 50px; } }
-    .page-title .container h1 {
+    .page-title .container h1.title {
       font-size: 3.5em;
       font-weight: bold;
       margin: 0;
@@ -6127,5 +6164,5 @@ body {
       left: 0px;
       bottom: -13px; }
       @media (max-width: 767px) {
-        .page-title .container h1 {
+        .page-title .container h1.title {
           font-size: 4em; } }

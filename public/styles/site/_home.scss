@@ -13,55 +13,34 @@
 		}
 	}
 
-	.content {
-		background-color: white;
-		box-shadow: $drop-shadow;
+	#welcome {
+		margin: 45px 0px 45px 0px;
+		text-align: center;
 
-		#welcome {
-			margin: 45px 0px 45px 0px;
-			text-align: center;
+		h1 {
+			line-height: 1.5;
+			margin: 0px;
 
-			h1 {
-				line-height: 1.5;
-				margin: 0px;
+			@include media-breakpoint-down(sm) {
+				font-size: 1.1em;
+			}
 
-				@include media-breakpoint-down(sm) {
-					font-size: 1.1em;
-				}
-
-				@include media-breakpoint-up(md) {
-					font-size: 1.5em;
-					margin-left: 50px;
-					margin-right: 50px;
-				}
+			@include media-breakpoint-up(md) {
+				font-size: 1.5em;
+				margin-left: 50px;
+				margin-right: 50px;
 			}
 		}
-
-		#learn-more-separator {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			justify-content: space-between;
-			font-size: 0.8em;
-			color: $red;
-			margin-bottom: 45px;
-
-			.line {
-				border-bottom: 1px solid $grey;
-				width: 33.3%;
-			}
+	}
+	.cell {
+		h2 {
+			font-size: 1.3em;
+			font-weight: bold;
+			margin-bottom: 0.8em;
 		}
 
-		.cell {
-			h2 {
-				font-size: 1.3em;
-				font-weight: bold;
-				margin-bottom: 0.8em;
-			}
-
-			p {
-				margin-bottom: 2em;
-			}
+		p {
+			margin-bottom: 2em;
 		}
 	}
 }
