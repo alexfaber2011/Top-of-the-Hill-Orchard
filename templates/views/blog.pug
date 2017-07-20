@@ -4,16 +4,17 @@ include ../mixins/separators
 
 mixin post(post)
 	.row
-		.post.col-12
-			.image-wrapper
-				img(src="https://www.waimeanurseries.co.nz/assets/Uploads/apples.jpg")
-			.post-content
-				a.title(href="#") Scott’s Apple Report
-				p.date August 15th, 2017
-				p.preview Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
-					| eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-					| minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-					| aliquip ex ea…
+		.col-12
+			.post
+				.image-wrapper
+					img(src="https://www.waimeanurseries.co.nz/assets/Uploads/apples.jpg")
+				.post-content
+					a.title(href="#") Scott’s Apple Report
+					p.date August 15th, 2017
+					p.preview Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
+						| eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+						| minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+						| aliquip ex ea…
 
 block content
 	+page-title('Blog')

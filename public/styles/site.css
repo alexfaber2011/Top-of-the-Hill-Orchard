@@ -6111,7 +6111,7 @@ a {
     #blog .post {
       flex-direction: column;
       align-items: center;
-      padding: 1em; } }
+      padding: 1em 0em 1em 0em; } }
   #blog .post .image-wrapper {
     width: 200px;
     margin-right: 1em; }
