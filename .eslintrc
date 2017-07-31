@@ -1,3 +1,4 @@
 {
-    "extends": "keystone"
+    "extends": "keystone",
+    "indent": ["error", 2]
 }

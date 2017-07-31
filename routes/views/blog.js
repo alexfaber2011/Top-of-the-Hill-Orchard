@@ -1,6 +1,10 @@
 var keystone = require('keystone');
 var async = require('async');
 
+const pch = require('../../modelHelpers/postCategoryHelper');
+
+
+
 exports = module.exports = function (req, res) {
 
 	var view = new keystone.View(req, res);
@@ -17,29 +21,37 @@ exports = module.exports = function (req, res) {
 	};
 
 	// Load all categories
-	view.on('init', function (next) {
+	// view.on('init', function (next) {
+	//
+	// 	keystone.list('PostCategory').model.find().sort('name').exec(function (err, results) {
+	//
+	// 		if (err || !results.length) {
+	// 			return next(err);
+	// 		}
+	//
+	// 		locals.data.categories = results;
+	//
+	// 		// Load the counts for each category
+	// 		async.each(locals.data.categories, function (category, next) {
+	//
+	// 			keystone.list('Post').model.count().where('categories').in([category.id]).exec(function (err, count) {
+	// 				category.postCount = count;
+	// 				next(err);
+	// 			});
+	//
+	// 		}, function (err) {
+	// 			next(err);
+	// 		});
+	// 	});
+	// });
 
-		keystone.list('PostCategory').model.find().sort('name').exec(function (err, results) {
-
-			if (err || !results.length) {
-				return next(err);
-			}
-
-			locals.data.categories = results;
-
-			// Load the counts for each category
-			async.each(locals.data.categories, function (category, next) {
-
-				keystone.list('Post').model.count().where('categories').in([category.id]).exec(function (err, count) {
-					category.postCount = count;
-					next(err);
-				});
-
-			}, function (err) {
-				next(err);
-			});
-		});
-	});
+	pch.getAllCategories()
+		.then(categories => {
+			console.log('categories: ', categories);
+		})
+		.catch(err => {
+			console.error('[view: blog.js] err: ', err);
+		})
 
 	// Load the current category filter
 	view.on('init', function (next) {
