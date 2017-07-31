@@ -1,7 +1,22 @@
 const keystone = require('keystone');
 const pch = require('./postCategoryHelper');
+const expect = require('chai').expect;
 
 const COLLECTION_NAME = 'postCategoryHelper'
+
+const insertCategory = (name, keystone) => {
+  const PostCageory = keystone.list('PostCategory');
+  const newPostCategory = new PostCageory.model({ name });
+  return new Promise((resolve, reject) => {
+    newPostCategory.save(err => {
+      if (err) {
+        console.error('[insertCategory] unable to post category: ', err);
+        reject();
+      }
+      resolve();
+    })
+  })
+}
 
 describe('Post Category Helper', () => {
   before(() => {
@@ -35,12 +50,21 @@ describe('Post Category Helper', () => {
   });
 
   it('should lists all of the categories', () => {
-    pch.getAllCategories()
-      .then(categories => {
-        console.log(categories);
-      })
-      .catch(err => {
-        console.log('err: ', err);
-      })
+    return Promise.all([
+      insertCategory('foo', keystone),
+      insertCategory('bar', keystone),
+      insertCategory('baz', keystone),
+    ]).then(() => {
+      return pch.getAllCategories()
+        .then(categories => {
+          expect(categories).to.have.lengthOf(3);
+          return
+        })
+        .catch(err => {
+          console.log('err: ', err);
+          expect.fail();
+          return
+        })
+    })
   })
 })
