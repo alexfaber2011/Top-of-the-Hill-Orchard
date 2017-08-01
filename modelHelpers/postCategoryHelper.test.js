@@ -1,6 +1,7 @@
 const keystone = require('keystone');
 const pch = require('./postCategoryHelper');
 const expect = require('chai').expect;
+const _ = require('lodash');
 
 const COLLECTION_NAME = 'postCategoryHelper'
 
@@ -49,7 +50,21 @@ describe('Post Category Helper', () => {
     });
   });
 
-  it('should lists all of the categories', () => {
+  it('should return an empty array if no categories exist', () => {
+    return pch.getAllCategories()
+      .then(categories => {
+        expect(categories).to.be.an('array');
+        expect(categories).to.have.lengthOf(0);
+        return
+      })
+      .catch(err => {
+        console.log('err: ', err);
+        expect.fail();
+        return
+      })
+  })
+
+  it('should lists all of the categories in alphabetical order', () => {
     return Promise.all([
       insertCategory('foo', keystone),
       insertCategory('bar', keystone),
@@ -58,6 +73,7 @@ describe('Post Category Helper', () => {
       return pch.getAllCategories()
         .then(categories => {
           expect(categories).to.have.lengthOf(3);
+          expect(_.map(categories,'name')).to.have.ordered.members(['bar', 'baz', 'foo'])
           return
         })
         .catch(err => {
