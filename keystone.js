@@ -12,6 +12,7 @@ var keystone = require('keystone');
 keystone.init({
 	'name': 'Top of the Hill Orchard',
 	'brand': 'Top of the Hill Orchard',
+	'port': 3000,
 
 	'sass': 'public',
 	'static': 'public',

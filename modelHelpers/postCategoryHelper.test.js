@@ -44,6 +44,9 @@ describe('Post Category Helper', () => {
                   console.error('[AFTER ALL] ERROR: Unable to drop database: ', err);
                 }
                 // console.info('[AFTER ALL] successfully dropped collection: ', COLLECTION_NAME);
+                keystone.closeDatabaseConnection();
+                const server = keystone.app.listen(process.env.PORT || 3000);
+                server.close();
                 done();
             });
         });
@@ -64,7 +67,7 @@ describe('Post Category Helper', () => {
       })
   })
 
-  it('should lists all of the categories in alphabetical order', () => {
+  it('should list all of the categories in alphabetical order', () => {
     return Promise.all([
       insertCategory('foo', keystone),
       insertCategory('bar', keystone),
