@@ -1,22 +1,24 @@
 const keystone = require('keystone');
 
-function getPage (start = 1, count = 10, category, state) {
+function getPage (start = 1, count = 10, categoryId, state) {
 	return new Promise((resolve, reject) => {
 		const Post = keystone.list('Post');
-    const query = Object.assign(
-      {},
-      state ? { state } : null,
-      category ? { category } : null
-    );
-    Post.paginate({
+    const q = Post.paginate({
       page: start,
       perPage: count,
       maxPage: 50,
-    })
-    .where(query)
-    .exec((err, posts) => {
-    	err ? reject(err) : resolve(posts);
     });
+		if (state) {
+			q.where({ state });
+		}
+		if (categoryId) {
+			q.where('categories').in([categoryId]);
+		}
+		q.sort('-publishedDate')
+		 .populate('author categories')
+     .exec((err, posts) => {
+    	 err ? reject(err) : resolve(posts);
+      });
 	});
 }
 

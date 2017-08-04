@@ -55,4 +55,22 @@ describe('Post Helper', () => {
           })
       });
   });
+
+  it('should return the first 7 published posts with the category of "Recipe"', () => {
+    return testUtility.insertCategory('Recipe', keystone)
+      .then((category) => {
+        return testUtility.insertNPosts(25, {categories: [category._id]}, keystone)
+          .then(() => {
+            return category
+          })
+      })
+      .then((category) => {
+        return postHelper.getPage(1, 7, category._id)
+          .then((paginationResponse) => {
+            console.log(paginationResponse);
+            expect(paginationResponse.total).to.equal(25);
+            expect(paginationResponse.results).to.have.lengthOf(7);
+          });
+      });
+  });
 });
