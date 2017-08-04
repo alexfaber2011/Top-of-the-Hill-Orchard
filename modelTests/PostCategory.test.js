@@ -12,7 +12,7 @@ describe('Post Category Model', () => {
   it('should delete the instance of a PostCategory in one Posts', () => {
     return testUtility.insertCategory('foobar', keystone)
       .then((category) => {
-        return testUtility.insertPost('fooPost', [category._id], keystone)
+        return testUtility.insertPost({title: 'fooPost', categories: [category._id]}, keystone)
           .then((post) => {
             return { post, category };
           });
@@ -60,9 +60,9 @@ describe('Post Category Model', () => {
     ])
     .then(([cat1, cat2]) => {
       return Promise.all([
-        testUtility.insertPost('fooPost', [cat1._id, EXTRANEOUS_ID], keystone),
-        testUtility.insertPost('bazPost', [cat2._id, EXTRANEOUS_ID], keystone),
-        testUtility.insertPost('barPost', [EXTRANEOUS_ID], keystone),
+        testUtility.insertPost({title: 'fooPost', categories: [cat1._id, EXTRANEOUS_ID]}, keystone),
+        testUtility.insertPost({title: 'bazPost', categories: [cat2._id, EXTRANEOUS_ID]}, keystone),
+        testUtility.insertPost({title: 'barPost', categories: [EXTRANEOUS_ID]}, keystone),
       ])
       .then(([post1, post2, post3]) => {
         return { cat1, cat2, post1, post2, post3 };

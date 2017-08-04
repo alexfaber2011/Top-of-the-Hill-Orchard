@@ -50,12 +50,9 @@ function insertCategory (name, keystone) {
   });
 };
 
-function insertPost (title, categoryIds, keystone) {
+function insertPost (postObject, keystone) {
   const Post = keystone.list('Post');
-  const newPost = new Post.model({
-    title,
-    categories: categoryIds
-  });
+  const newPost = new Post.model(postObject);
   return new Promise((resolve, reject) => {
     newPost.save(err => {
       if (err) {
