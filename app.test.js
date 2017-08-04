@@ -42,12 +42,40 @@ function insertCategory (name, keystone) {
   return new Promise((resolve, reject) => {
     newPostCategory.save(err => {
       if (err) {
-        console.error('[insertCategory] unable to post category: ', err);
+        console.error('[insertCategory] unable to save post category: ', err);
         reject();
       }
-      resolve();
+      resolve(newPostCategory);
     });
   });
 };
 
-module.exports = { insertCategory };
+function insertPost (title, categoryIds, keystone) {
+  const Post = keystone.list('Post');
+  const newPost = new Post.model({
+    title,
+    categories: categoryIds
+  });
+  return new Promise((resolve, reject) => {
+    newPost.save(err => {
+      if (err) {
+        console.error('[insertPost] unable to save post: ', err);
+        reject(err);
+      }
+      resolve(newPost);
+    });
+  });
+}
+
+function deleteAllDocuments (collectionName, keystone) {
+  const Model = keystone.list(collectionName);
+  return new Promise((resolve, reject) => {
+    Model.model
+      .find()
+      .remove((err) => {
+        err ? reject(err) : resolve();
+      });
+  });
+}
+
+module.exports = { insertCategory, insertPost, deleteAllDocuments };

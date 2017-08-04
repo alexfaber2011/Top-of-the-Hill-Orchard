@@ -1,5 +1,5 @@
 var keystone = require('keystone');
-let Post = keystone.list('Post');
+const { ObjectId } = require('mongodb');
 
 /**
  * PostCategory Model
@@ -14,14 +14,14 @@ PostCategory.add({
 	name: { type: String, required: true },
 });
 
-PostCategory.schema.pre('remove', (next) => {
-	console.log('[remove hook]');
+PostCategory.schema.pre('remove', function (next) {
+	const Post = keystone.list('Post');
 	const category = this;
-	Post.model.updateMany(
-		{ categories: { $in: [category._id] } },
-		{ $pullAll: { categories: [category._id] } },
-		next
-	);
+	Post.model.collection
+		.updateMany(
+			{ categories: { $in: [ObjectId(category._id)] } },
+			{ $pullAll: { categories: [ObjectId(category._id)] } },
+			next);
 });
 
 PostCategory.relationship({ ref: 'Post', path: 'posts', refPath: 'categories' });

@@ -5,6 +5,11 @@ const _ = require('lodash');
 const testUtility = require('../app.test.js');
 
 describe('Post Category Helper', () => {
+  after(() => {
+    testUtility.deleteAllDocuments('Post', keystone);
+    testUtility.deleteAllDocuments('PostCategory', keystone);
+  });
+
   it('should return an empty array if no categories exist', () => {
     return pch.getAllCategories()
       .then(categories => {
