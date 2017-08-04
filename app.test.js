@@ -1,4 +1,5 @@
 const keystone = require('keystone');
+const _ = require('lodash');
 
 const COLLECTION_NAME = 'postCategoryHelper'
 
@@ -64,6 +65,12 @@ function insertPost (postObject, keystone) {
   });
 }
 
+function insertNPosts (count, additionalValues, keystone) {
+  return Promise.all(_.map(_.range(count), (cur) => {
+    return insertPost(Object.assign({title: `${cur}.${Math.random()}`}, additionalValues), keystone);
+  }));
+}
+
 function deleteAllDocuments (collectionName, keystone) {
   const Model = keystone.list(collectionName);
   return new Promise((resolve, reject) => {
@@ -75,4 +82,4 @@ function deleteAllDocuments (collectionName, keystone) {
   });
 }
 
-module.exports = { insertCategory, insertPost, deleteAllDocuments };
+module.exports = { insertCategory, insertPost, insertNPosts, deleteAllDocuments };

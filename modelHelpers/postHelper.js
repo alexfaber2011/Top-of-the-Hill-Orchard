@@ -1,9 +1,13 @@
 const keystone = require('keystone');
 
-function getPage (start = 1, count = 10, category, state = 'published') {
+function getPage (start = 1, count = 10, category, state) {
 	return new Promise((resolve, reject) => {
 		const Post = keystone.list('Post');
-    const query = Object.assign({ state }, category ? { category } : null);
+    const query = Object.assign(
+      {},
+      state ? { state } : null,
+      category ? { category } : null
+    );
     Post.paginate({
       page: start,
       perPage: count,
