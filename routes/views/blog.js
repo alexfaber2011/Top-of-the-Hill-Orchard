@@ -1,14 +1,28 @@
 var keystone = require('keystone');
 var async = require('async');
+const _ = require('lodash');
 
-const pch = require('../../modelHelpers/postCategoryHelper');
+const postCategoryHelper = require('../../modelHelpers/postCategoryHelper');
+const postHelper = require('../../modelHelpers/postHelper');
 
+
+/**
+ * extractPageNumber - grabs the page number from query params
+ *
+ * @param  {object} req the express request object
+ * @return {number}     the page number if it exists, null otherwise
+ */
+function extractPageNumber (req) {
+	return _.chain(req).get(['query', 'page']).toNumber().value();
+}
 
 
 exports = module.exports = function (req, res) {
+	const pageNumber = extractPageNumber(req);
+	const category = _.get(req, ['params', 'category']);
 
-	var view = new keystone.View(req, res);
-	var locals = res.locals;
+	const view = new keystone.View(req, res);
+	const locals = res.locals;
 
 	// Init locals
 	locals.section = 'blog';
@@ -16,80 +30,67 @@ exports = module.exports = function (req, res) {
 		category: req.params.category,
 	};
 	locals.data = {
+		postSeparatorText: '',
 		posts: [],
 		categories: [],
 	};
 
-	// Load all categories
+	Promise.all([
+		postCategoryHelper.getAllCategories(),
+		postHelper.getPage(pageNumber, 10, category)
+	])
+	.then(([categories, paginatedPosts]) => {
+		console.log('categories: ', categories);
+		console.log('paginatedPosts: ', paginatedPosts);
+		locals.data.categories = categories;
+		locals.data.posts = paginatedPosts.results;
+		locals.data.postSeparatorText = `${paginatedPosts.total} blog ${paginatedPosts.total === 1 ? 'entry' : 'entries'}`;
+
+		// Render the view
+		view.render('blog');
+	})
+	.catch(err => {
+		//TODO respond with a friendly page
+		console.error('err: ', err);
+	})
+
+
+
+	// Load the current category filter
 	// view.on('init', function (next) {
 	//
-	// 	keystone.list('PostCategory').model.find().sort('name').exec(function (err, results) {
-	//
-	// 		if (err || !results.length) {
-	// 			return next(err);
-	// 		}
-	//
-	// 		locals.data.categories = results;
-	//
-	// 		// Load the counts for each category
-	// 		async.each(locals.data.categories, function (category, next) {
-	//
-	// 			keystone.list('Post').model.count().where('categories').in([category.id]).exec(function (err, count) {
-	// 				category.postCount = count;
-	// 				next(err);
-	// 			});
-	//
-	// 		}, function (err) {
+	// 	if (req.params.category) {
+	// 		keystone.list('PostCategory').model.findOne({ key: locals.filters.category }).exec(function (err, result) {
+	// 			locals.data.category = result;
 	// 			next(err);
 	// 		});
+	// 	} else {
+	// 		next();
+	// 	}
+	// });
+
+	// Load the posts
+	// view.on('init', function (next) {
+	//
+	// 	var q = keystone.list('Post').paginate({
+	// 		page: req.query.page || 1,
+	// 		perPage: 10,
+	// 		maxPages: 10,
+	// 		filters: {
+	// 			state: 'published',
+	// 		},
+	// 	})
+	// 		.sort('-publishedDate')
+	// 		.populate('author categories');
+	//
+	// 	if (locals.data.category) {
+	// 		q.where('categories').in([locals.data.category]);
+	// 	}
+	//
+	// 	q.exec(function (err, results) {
+	// 		locals.data.posts = results;
+	// 		next(err);
 	// 	});
 	// });
 
-	pch.getAllCategories()
-		.then(categories => {
-			console.log('categories: ', categories);
-		})
-		.catch(err => {
-			console.error('[view: blog.js] err: ', err);
-		})
-
-	// Load the current category filter
-	view.on('init', function (next) {
-
-		if (req.params.category) {
-			keystone.list('PostCategory').model.findOne({ key: locals.filters.category }).exec(function (err, result) {
-				locals.data.category = result;
-				next(err);
-			});
-		} else {
-			next();
-		}
-	});
-
-	// Load the posts
-	view.on('init', function (next) {
-
-		var q = keystone.list('Post').paginate({
-			page: req.query.page || 1,
-			perPage: 10,
-			maxPages: 10,
-			filters: {
-				state: 'published',
-			},
-		})
-			.sort('-publishedDate')
-			.populate('author categories');
-
-		if (locals.data.category) {
-			q.where('categories').in([locals.data.category]);
-		}
-
-		q.exec(function (err, results) {
-			locals.data.posts = results;
-			next(err);
-		});
-	});
-
-	// Render the view
-	view.render('blog');
 };

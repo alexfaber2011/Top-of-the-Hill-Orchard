@@ -9,13 +9,10 @@ mixin post(post)
 				.image-wrapper
 					img(src="https://www.waimeanurseries.co.nz/assets/Uploads/apples.jpg")
 				.post-content
-					a.title(href="#") Scott’s Apple Report
-					p.date August 15th, 2017
-					p.preview Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
-						| eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-						| minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-						| aliquip ex ea…
-
+					a.title(href="#")= post.title
+					p.date= post.humanReadablePublishedDate
+					p.preview= post.content.brief
+					
 block content
 	+page-title('Blog')
 	#blog
@@ -28,13 +25,9 @@ block content
 						.row.justify-content-center
 							div.col-sm-2.category
 								a(href="#") All
-							div.col-sm-2.category
-								a(href="#") Apple Report
-							div.col-sm-2.category
-								a(href="#") News
-							div.col-sm-2.category
-								a(href="#") Recipes
-				+separator("2 blog entries")
-				+post()
-				+post()
-				+post()
+							each category in data.categories
+								div.col-sm-2.category
+									a(href="#")= category.name
+				+separator(data.postSeparatorText)
+				each post in data.posts
+					+post(post)
