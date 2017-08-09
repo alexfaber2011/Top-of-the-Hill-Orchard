@@ -34,10 +34,12 @@ function getPage (start = 1, count = 10, categoryId, state) {
 }
 
 function getPageByCategory (start = 1, count = 10, categoryName, state) {
-	return getCategory({ name: categoryName })
-		.then((category) => {
-			return getPage(start, count, category._id, state);
-		});
+	return !categoryName
+		? getPage(state, count, null, state)
+		: getCategory({ name: categoryName })
+				.then((category) => {
+					return getPage(start, count, category._id, state);
+				});
 }
 
 module.exports = { getPage, enrichPaginationReponse, getPageByCategory };

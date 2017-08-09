@@ -1,10 +1,7 @@
 var keystone = require('keystone');
-var async = require('async');
 const _ = require('lodash');
-
-const postCategoryHelper = require('../../modelHelpers/postCategoryHelper');
-const postHelper = require('../../modelHelpers/postHelper');
-
+const { getAllCategories } = require('../../modelHelpers/postCategoryHelper');
+const { getPageByCategory } = require('../../modelHelpers/postHelper');
 
 /**
  * extractPageNumber - grabs the page number from query params
@@ -16,10 +13,9 @@ function extractPageNumber (req) {
 	return _.chain(req).get(['query', 'page']).toNumber().value();
 }
 
-
 exports = module.exports = function (req, res) {
 	const pageNumber = extractPageNumber(req);
-	const category = _.get(req, ['params', 'category']);
+	const categoryName = _.get(req, ['params', 'category']);
 
 	const view = new keystone.View(req, res);
 	const locals = res.locals;
@@ -36,16 +32,14 @@ exports = module.exports = function (req, res) {
 	};
 
 	Promise.all([
-		postCategoryHelper.getAllCategories(),
-		postHelper.getPage(pageNumber, 10, category)
+		getAllCategories(),
+		getPageByCategory(pageNumber, 10, categoryName)
 	])
 	.then(([categories, paginatedPosts]) => {
-		console.log('categories: ', categories);
 		console.log('paginatedPosts: ', paginatedPosts);
 		locals.data.categories = categories;
 		locals.data.posts = paginatedPosts.results;
 		locals.data.postSeparatorText = `${paginatedPosts.total} blog ${paginatedPosts.total === 1 ? 'entry' : 'entries'}`;
-
 		// Render the view
 		view.render('blog');
 	})
@@ -53,44 +47,4 @@ exports = module.exports = function (req, res) {
 		//TODO respond with a friendly page
 		console.error('err: ', err);
 	})
-
-
-
-	// Load the current category filter
-	// view.on('init', function (next) {
-	//
-	// 	if (req.params.category) {
-	// 		keystone.list('PostCategory').model.findOne({ key: locals.filters.category }).exec(function (err, result) {
-	// 			locals.data.category = result;
-	// 			next(err);
-	// 		});
-	// 	} else {
-	// 		next();
-	// 	}
-	// });
-
-	// Load the posts
-	// view.on('init', function (next) {
-	//
-	// 	var q = keystone.list('Post').paginate({
-	// 		page: req.query.page || 1,
-	// 		perPage: 10,
-	// 		maxPages: 10,
-	// 		filters: {
-	// 			state: 'published',
-	// 		},
-	// 	})
-	// 		.sort('-publishedDate')
-	// 		.populate('author categories');
-	//
-	// 	if (locals.data.category) {
-	// 		q.where('categories').in([locals.data.category]);
-	// 	}
-	//
-	// 	q.exec(function (err, results) {
-	// 		locals.data.posts = results;
-	// 		next(err);
-	// 	});
-	// });
-
 };
