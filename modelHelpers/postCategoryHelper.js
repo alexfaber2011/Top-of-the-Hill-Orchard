@@ -1,8 +1,8 @@
 const keystone = require('keystone');
 
-const getCategoryById = (categoryId) => {
+const getCategory = (query) => {
 	return new Promise((resolve, reject) => {
-		keystone.list('PostCategory').model.findById(categoryId)
+		keystone.list('PostCategory').model.findOne(query)
 			.exec((err, category) => {
 				err ? reject(err) : resolve(category);
 			});
@@ -20,4 +20,4 @@ const getAllCategories = () => {
 	});
 };
 
-module.exports = { getAllCategories, getCategoryById };
+module.exports = { getAllCategories, getCategory };

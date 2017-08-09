@@ -1,5 +1,5 @@
 const keystone = require('keystone');
-const { getCategoryById,
+const { getCategory,
         getAllCategories, } = require('./postCategoryHelper');
 const expect = require('chai').expect;
 const _ = require('lodash');
@@ -7,9 +7,9 @@ const testUtility = require('../app.test.js');
 
 describe('Post Category Helper', () => {
 
-  describe('getCategoryById()', () => {
+  describe('getCategory()', () => {
 
-    after(() => {
+    afterEach(() => {
       testUtility.deleteAllDocuments('Post', keystone);
       testUtility.deleteAllDocuments('PostCategory', keystone);
     });
@@ -17,9 +17,8 @@ describe('Post Category Helper', () => {
     it('should return a the category', () => {
       return testUtility.insertCategory('foo', keystone)
         .then((category) => {
-          return category._id;
+          return getCategory({_id: category._id});
         })
-        .then(getCategoryById)
         .then((category) => {
           expect(category.name).to.equal('foo');
           return
@@ -32,7 +31,7 @@ describe('Post Category Helper', () => {
     });
 
     it('should return null if the category doesn\'t exist', () => {
-      return getCategoryById()
+      return getCategory({name: 'foo'})
         .then((category) => {
           expect(category).to.be.null;
           return
