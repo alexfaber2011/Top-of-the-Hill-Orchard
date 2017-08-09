@@ -10,13 +10,18 @@ body {
 
 #footer {
 	background-color: $blue;
+	padding: 1em;
 
 	p {
 		font-size: 0.8em;
-		padding: 1em;
+		padding: 0em;
 		margin: 0;
 		color: $grey;
 		text-align: center;
+
+		a {
+			color: $grey;
+		}
 	}
 }
 

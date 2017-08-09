@@ -6143,13 +6143,16 @@ body {
   background-repeat: no-repeat; }
 
 #footer {
-  background-color: #455F70; }
+  background-color: #455F70;
+  padding: 1em; }
   #footer p {
     font-size: 0.8em;
-    padding: 1em;
+    padding: 0em;
     margin: 0;
     color: #EBEBEB;
     text-align: center; }
+    #footer p a {
+      color: #EBEBEB; }
 
 .gallery-image img {
   display: block;
