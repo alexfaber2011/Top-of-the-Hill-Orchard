@@ -1,6 +1,7 @@
 const keystone = require('keystone');
 const _ = require('lodash');
 const moment = require('moment');
+const { getCategory } = require('./postCategoryHelper');
 
 function enrichPaginationReponse (paginatedPosts) {
 	return _.update(paginatedPosts, 'results', (results) => {
@@ -32,4 +33,11 @@ function getPage (start = 1, count = 10, categoryId, state) {
 	});
 }
 
-module.exports = { getPage, enrichPaginationReponse };
+function getPageByCategory (start = 1, count = 10, categoryName, state) {
+	return getCategory({ name: categoryName })
+		.then((category) => {
+			return getPage(start, count, category._id, state);
+		});
+}
+
+module.exports = { getPage, enrichPaginationReponse, getPageByCategory };

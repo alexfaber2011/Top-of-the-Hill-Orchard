@@ -1,8 +1,12 @@
 const keystone = require('keystone');
 const expect = require('chai').expect;
 const _ = require('lodash');
-const testUtility = require('../app.test.js');
-const postHelper = require('./postHelper');
+const { deleteAllDocuments,
+        insertNPosts,
+        insertCategory, } = require('../app.test.js');
+const { enrichPaginationReponse,
+        getPage,
+        getPageByCategory, } = require('./postHelper');
 
 const EXAMPLE_POST = {
   "_id": "59372fc83f804c7a8ed864ba",
@@ -64,14 +68,14 @@ describe('Post Helper', () => {
     describe('enrichPaginationReponse()', () => {
 
       it('should add a humandReadablePublishedDate to every post', () => {
-        const actualResult = postHelper.enrichPaginationReponse(EXAMPLE_PAGINATED_POSTS_RESPONSE);
+        const actualResult = enrichPaginationReponse(EXAMPLE_PAGINATED_POSTS_RESPONSE);
         expect(actualResult.results[0].humanReadablePublishedDate).to.equal('June 6th 2017');
         expect(actualResult.results[1].humanReadablePublishedDate).to.equal('July 6th 2017');
       });
 
       it('shouldn\'t puke when a publishedDate is falsy', () => {
         const examplePaginatedPostResponse = _.merge(_.cloneDeep(EXAMPLE_PAGINATED_POSTS_RESPONSE), {results: [_.set(_.cloneDeep(EXAMPLE_POST), 'publishedDate', null)]});
-        const actualResult = postHelper.enrichPaginationReponse(examplePaginatedPostResponse);
+        const actualResult = enrichPaginationReponse(examplePaginatedPostResponse);
         expect(actualResult.results[0].humanReadablePublishedDate).to.equal('Invalid date');
       });
     });
@@ -80,14 +84,14 @@ describe('Post Helper', () => {
   describe('[db functions]', () => {
 
     afterEach(() => {
-      testUtility.deleteAllDocuments('Post', keystone);
-      testUtility.deleteAllDocuments('PostCategory', keystone);
+      deleteAllDocuments('Post', keystone);
+      deleteAllDocuments('PostCategory', keystone);
     });
 
     describe('getPage()', () => {
       it('should retreive all 3 posts', () => {
-        return testUtility.insertNPosts(3, null, keystone).then(() => {
-          return postHelper.getPage()
+        return insertNPosts(3, null, keystone).then(() => {
+          return getPage()
             .then((paginationResponse) => {
               expect(paginationResponse.total).to.equal(3);
               expect(paginationResponse.results).to.have.lengthOf(3);
@@ -100,9 +104,9 @@ describe('Post Helper', () => {
       });
 
       it('should return the first 10 posts (when the collection has 13)', () => {
-        return testUtility.insertNPosts(13, null, keystone)
+        return insertNPosts(13, null, keystone)
           .then(() => {
-            return postHelper.getPage()
+            return getPage()
               .then((paginationResponse) => {
                 expect(paginationResponse.total).to.equal(13);
                 expect(paginationResponse.results).to.have.lengthOf(10);
@@ -115,10 +119,10 @@ describe('Post Helper', () => {
       });
 
       it('should return the first 10 published posts (when the collection has 23 total posts)', () => {
-        return testUtility.insertNPosts(13, {state: 'published'}, keystone)
-          .then(testUtility.insertNPosts(10, null, keystone))
+        return insertNPosts(13, {state: 'published'}, keystone)
+          .then(insertNPosts(10, null, keystone))
           .then(() => {
-            return postHelper.getPage(1, 10, null, 'published')
+            return getPage(1, 10, null, 'published')
               .then((paginationResponse) => {
                 expect(paginationResponse.total).to.equal(23);
                 expect(paginationResponse.results).to.have.lengthOf(10);
@@ -132,19 +136,50 @@ describe('Post Helper', () => {
       });
 
       it('should return the first 7 published posts with the category of "Recipe"', () => {
-        return testUtility.insertCategory('Recipe', keystone)
+        return insertCategory('Recipe', keystone)
           .then((category) => {
-            return testUtility.insertNPosts(25, {categories: [category._id]}, keystone)
+            return insertNPosts(25, {categories: [category._id]}, keystone)
               .then(() => {
                 return category
               })
           })
           .then((category) => {
-            return postHelper.getPage(1, 7, category._id)
+            return getPage(1, 7, category._id)
               .then((paginationResponse) => {
                 expect(paginationResponse.total).to.equal(25);
                 expect(paginationResponse.results).to.have.lengthOf(7);
               });
+          })
+          .catch((err) => {
+            console.log('err: ', err);
+            expect.fail();
+            return
+          })
+      });
+    });
+
+    describe('getPageByCategory()', () => {
+
+      it('should get the first 15 posts with a given category game', () => {
+        return insertCategory('Recipe', keystone)
+          .then((category) => {
+            return insertNPosts(25, {categories: [category._id]}, keystone)
+              .then(() => {
+                return category;
+              });
+          })
+          .then((category) => {
+            return getPageByCategory(1, 15, category.name)
+          })
+          .then((paginationResponse) => {
+            expect(paginationResponse.total).to.equal(25);
+            expect(paginationResponse.results).to.have.lengthOf(15);
+            return
+          })
+          .catch((err) => {
+            console.log('err: ', err);
+            expect.fail();
+            return
           });
       });
     });
