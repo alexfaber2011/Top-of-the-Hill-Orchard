@@ -13,8 +13,17 @@ function extractPageNumber (req) {
 	return _.chain(req).get(['query', 'page']).toNumber().value();
 }
 
+function generatePageNumbers (pageNumbers, currentPage) {
+	return _.map(pageNumbers, (pageNumber) => {
+		return {
+			number: pageNumber,
+			isActive: currentPage === pageNumber,
+		}
+	});
+}
+
 exports = module.exports = function (req, res) {
-	const pageNumber = extractPageNumber(req);
+	const pageNumber = extractPageNumber(req) || 1;
 	const categoryName = _.get(req, ['params', 'category']);
 
 	const view = new keystone.View(req, res);
@@ -26,9 +35,13 @@ exports = module.exports = function (req, res) {
 		category: req.params.category,
 	};
 	locals.data = {
+		pageNumber,
 		postSeparatorText: '',
 		posts: [],
 		categories: [],
+		pageNumbers: [],
+		previousPageNumber: pageNumber - 1 || null,
+		nextPageNumber: null,
 	};
 
 	Promise.all([
@@ -37,6 +50,8 @@ exports = module.exports = function (req, res) {
 	])
 	.then(([categories, paginatedPosts]) => {
 		console.log('paginatedPosts: ', paginatedPosts);
+		locals.data.pageNumbers = generatePageNumbers(paginatedPosts.pages, pageNumber);
+		locals.data.nextPageNumber = pageNumber >= paginatedPosts.totalPages ? null : pageNumber + 1;
 		locals.data.categories = categories;
 		locals.data.posts = paginatedPosts.results;
 		locals.data.postSeparatorText = `${paginatedPosts.total} blog ${paginatedPosts.total === 1 ? 'entry' : 'entries'}`;

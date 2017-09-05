@@ -31,3 +31,17 @@ block content
 				+separator(data.postSeparatorText)
 				each post in data.posts
 					+post(post)
+				.row
+					.col-12
+						ul.pagination
+							li.page-item(class=data.previousPageNumber ? "" : "disabled")
+								a.page-link(href=`?page=${data.previousPageNumber}` aria-label="Previous")
+									span(aria-hidden="true") &laquo;
+									span.sr-only Previous
+							each page in data.pageNumbers
+								li.page-item(class=page.isActive ? "active" : "")
+									a.page-link(href=`?page=${page.number}`)= page.number
+							li.page-item(class=data.nextPageNumber ? "" : "disabled")
+								a.page-link(href=`?page=${data.nextPageNumber}` aria-label="Next")
+									span(aria-hidden="true") &raquo;
+									span.sr-only Next
