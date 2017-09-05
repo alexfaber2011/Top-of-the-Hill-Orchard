@@ -49,7 +49,6 @@ exports = module.exports = function (req, res) {
 		getPageByCategory(pageNumber, 10, categoryName)
 	])
 	.then(([categories, paginatedPosts]) => {
-		console.log('paginatedPosts: ', paginatedPosts);
 		locals.data.pageNumbers = generatePageNumbers(paginatedPosts.pages, pageNumber);
 		locals.data.nextPageNumber = pageNumber >= paginatedPosts.totalPages ? null : pageNumber + 1;
 		locals.data.categories = categories;
