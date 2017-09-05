@@ -14,17 +14,16 @@ function enrichPaginationReponse (paginatedPosts) {
 function getPage (start = 1, count = 10, categoryId, state) {
 	return new Promise((resolve, reject) => {
 		const Post = keystone.list('Post');
+		const filters = _.merge(
+			{},
+			state ? { state } : null,
+			categoryId ? {'categories': {$in: [categoryId]}} : null
+		)
     const q = Post.paginate({
       page: start,
       perPage: count,
-      maxPage: 50,
+			filters,
     });
-		if (state) {
-			q.where({ state });
-		}
-		if (categoryId) {
-			q.where('categories').in([categoryId]);
-		}
 		q.sort('-publishedDate')
 		 .populate('author categories')
      .exec((err, paginatedPosts) => {
@@ -35,7 +34,7 @@ function getPage (start = 1, count = 10, categoryId, state) {
 
 function getPageByCategory (start = 1, count = 10, categoryName, state) {
 	return !categoryName
-		? getPage(state, count, null, state)
+		? getPage(start, count, null, state)
 		: getCategory({ name: categoryName })
 				.then((category) => {
 					return getPage(start, count, category._id, state);

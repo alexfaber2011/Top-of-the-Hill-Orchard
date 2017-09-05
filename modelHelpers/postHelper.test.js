@@ -124,9 +124,9 @@ describe('Post Helper', () => {
           .then(() => {
             return getPage(1, 10, null, 'published')
               .then((paginationResponse) => {
-                expect(paginationResponse.total).to.equal(23);
+                expect(paginationResponse.total).to.equal(13);
                 expect(paginationResponse.results).to.have.lengthOf(10);
-                expect(paginationResponse.totalPages).to.equal(3);  //This seems a little fishy
+                expect(paginationResponse.totalPages).to.equal(2)
               })
               .catch((err) => {
                 console.log(err);
@@ -135,7 +135,7 @@ describe('Post Helper', () => {
           });
       });
 
-      it('should return the first 7 published posts with the category of "Recipe"', () => {
+      it('should return the first 7 posts with the category of "Recipe"', () => {
         return insertCategory('Recipe', keystone)
           .then((category) => {
             return insertNPosts(25, {categories: [category._id]}, keystone)
@@ -154,8 +154,32 @@ describe('Post Helper', () => {
             console.log('err: ', err);
             expect.fail();
             return
-          })
+          });
       });
+
+      it('should return 10 posts with a total less than the total number of documents', () => {
+        return insertCategory('Recipe', keystone)
+          .then(category => {
+            return Promise.all([
+              insertNPosts(10, {categories: [category._id]}, keystone),
+              insertNPosts(55, null, keystone),
+            ])
+            .then(() => category)
+          })
+          .then(category => {
+            return getPage(null, null, category._id)
+          })
+          .then(paginationResponse => {
+            expect(paginationResponse.total).to.equal(10);
+            expect(paginationResponse.results).to.have.lengthOf(10);
+            return
+          })
+          .catch(err => {
+            console.log('err: ', err);
+            expect.fail();
+            return
+          })
+      })
     });
 
     describe('getPageByCategory()', () => {
