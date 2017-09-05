@@ -6,8 +6,9 @@ mixin post(post)
 	.row
 		.col-12
 			.post
-				.image-wrapper
-					img(src="https://www.waimeanurseries.co.nz/assets/Uploads/apples.jpg")
+				if _.get(post, ['image', 'secure_url'])
+					.image-wrapper
+						img(src=_.get(post, ['image', 'secure_url']))
 				.post-content
 					a.title(href="#")= post.title
 					p.date= post.humanReadablePublishedDate
