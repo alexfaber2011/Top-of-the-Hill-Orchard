@@ -41,4 +41,13 @@ function getPageByCategory (start = 1, count = 10, categoryName, state) {
 				});
 }
 
-module.exports = { getPage, enrichPaginationReponse, getPageByCategory };
+function getPost (query) {
+	return new Promise((resolve, reject) => {
+		keystone.list('Post').model.findOne(query)
+		 .exec((err, post) => {
+			 err ? reject(err) : resolve(post);
+		 });
+	});
+}
+
+module.exports = { getPage, enrichPaginationReponse, getPageByCategory, getPost };

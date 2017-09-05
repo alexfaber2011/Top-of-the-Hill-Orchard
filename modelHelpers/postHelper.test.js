@@ -6,7 +6,8 @@ const { deleteAllDocuments,
         insertCategory, } = require('../app.test.js');
 const { enrichPaginationReponse,
         getPage,
-        getPageByCategory, } = require('./postHelper');
+        getPageByCategory,
+        getPost, } = require('./postHelper');
 
 const EXAMPLE_POST = {
   "_id": "59372fc83f804c7a8ed864ba",
@@ -201,6 +202,38 @@ describe('Post Helper', () => {
             return
           })
           .catch((err) => {
+            console.log('err: ', err);
+            expect.fail();
+            return
+          });
+      });
+    });
+
+    describe.only('getPost()', () => {
+
+      it('should get a post', () => {
+        return insertNPosts(1, null, keystone)
+          .then((posts) => {
+            return getPost({slug: posts[0].slug})
+          })
+          .then(post => {
+            expect(post).to.exist
+            return
+          })
+          .catch(err => {
+            console.log('err: ', err);
+            expect.fail();
+            return
+          });
+      });
+
+      it('should return null if the post does not exist', () => {
+        return getPost({slug: 'foo-slug'})
+          .then(post => {
+            expect(post).to.be.null
+            return
+          })
+          .catch(err => {
             console.log('err: ', err);
             expect.fail();
             return
