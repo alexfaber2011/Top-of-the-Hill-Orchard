@@ -8,10 +8,10 @@ mixin post(post)
 			.post
 				if _.get(post, ['image', 'secure_url'])
 					.image-wrapper
-						a(href=`blog/post/${post.slug}`)
+						a(href=`/blog/post/${post.slug}`)
 							img(src=_.get(post, ['image', 'secure_url']))
 				.post-content
-					a.title(href=`blog/post/${post.slug}`)= post.title
+					a.title(href=`/blog/post/${post.slug}`)= post.title
 					p.date= post.humanReadablePublishedDate
 					p.preview= post.content.brief
 					

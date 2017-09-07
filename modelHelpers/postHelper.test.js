@@ -209,7 +209,7 @@ describe('Post Helper', () => {
       });
     });
 
-    describe.only('getPost()', () => {
+    describe('getPost()', () => {
 
       it('should get a post', () => {
         return insertNPosts(1, null, keystone)

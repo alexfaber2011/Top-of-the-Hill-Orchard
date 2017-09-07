@@ -1,0 +1,49 @@
+#post{
+	.content {
+		min-height: 350px;
+	}
+
+	.headings {
+		margin-bottom: 1em;
+		h1 {
+			padding: .5em 0em .2em 0em;
+			color: $blue;
+		}
+
+		h2 {
+			font-size: 1em;
+			padding: 0em 0em .2em 0em;
+			color: $red;
+		}
+	}
+
+	.back {
+		padding-top: 1em;
+		padding-bottom: 1em;
+	}
+
+	.image-container {
+		display: flex;
+		justify-content: center;
+		margin-bottom: 1em;
+		position: relative;
+		overflow: hidden;
+
+		img.background {
+			z-index: 0;
+			position: absolute;
+			top: -50px;
+			width: 110%;
+			-webkit-filter: blur(25px);
+			filter: blur(25px) opacity(50%);
+		}
+
+		.image-wrapper {
+			z-index: 1;
+			img {
+				width: 100%;
+				height: auto;
+			}
+		}
+	}
+}

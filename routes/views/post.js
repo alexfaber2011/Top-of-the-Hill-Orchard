@@ -1,21 +1,23 @@
 var keystone = require('keystone');
+const { getPost } = require('../../modelHelpers/postHelper');
 
 exports = module.exports = function (req, res) {
-
 	var view = new keystone.View(req, res);
 	var locals = res.locals;
 
 	// Set locals
 	locals.section = 'blog';
-	locals.filters = {
-		post: req.params.post,
-	};
 	locals.data = {
-		posts: [],
+		post: null,
 	};
 
-	
-
-	// Render the view
-	view.render('post');
+	getPost({slug: req.params.slug})
+		.then(post => {
+			console.log('post: ', post);
+			locals.data.post = post;
+			view.render('post');
+		})
+		.catch(err => {
+			//TODO respond with a friendly error page
+		})
 };

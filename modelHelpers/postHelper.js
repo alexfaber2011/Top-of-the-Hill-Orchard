@@ -45,7 +45,15 @@ function getPost (query) {
 	return new Promise((resolve, reject) => {
 		keystone.list('Post').model.findOne(query)
 		 .exec((err, post) => {
-			 err ? reject(err) : resolve(post);
+			 if (err) {
+				 reject(err);
+			 } else if (post) {
+				 resolve(Object.assign(post, {
+					 humanReadablePublishedDate: moment(post.publishedDate).format('MMMM Do YYYY')
+				 }));
+			 } else {
+				 resolve(post);
+			 }
 		 });
 	});
 }

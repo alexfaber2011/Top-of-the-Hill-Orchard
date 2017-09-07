@@ -6180,3 +6180,39 @@ body {
       @media (max-width: 767px) {
         .page-title .container h1.title {
           font-size: 4em; } }
+
+#post .content {
+  min-height: 350px; }
+
+#post .headings {
+  margin-bottom: 1em; }
+  #post .headings h1 {
+    padding: .5em 0em .2em 0em;
+    color: #455F70; }
+  #post .headings h2 {
+    font-size: 1em;
+    padding: 0em 0em .2em 0em;
+    color: #B18282; }
+
+#post .back {
+  padding-top: 1em;
+  padding-bottom: 1em; }
+
+#post .image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+  position: relative;
+  overflow: hidden; }
+  #post .image-container img.background {
+    z-index: 0;
+    position: absolute;
+    top: -50px;
+    width: 110%;
+    -webkit-filter: blur(25px);
+    filter: blur(25px) opacity(50%); }
+  #post .image-container .image-wrapper {
+    z-index: 1; }
+    #post .image-container .image-wrapper img {
+      width: 100%;
+      height: auto; }
