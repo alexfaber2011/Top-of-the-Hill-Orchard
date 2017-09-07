@@ -17,7 +17,7 @@ block content
 			if _.get(data.post, ['image', 'secure_url'])
 				.image-container
 					img.background(src=_.get(data.post, ['image', 'secure_url']))
-					.image-wrapper(style=`width: ${_.get(data.post, ['image', 'width'])};`)
+					.container.image-wrapper(style=`width: ${_.get(data.post, ['image', 'width'])};`)
 						img(src=_.get(data.post, ['image', 'secure_url']))
 			.container
 				.row

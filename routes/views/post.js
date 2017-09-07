@@ -13,7 +13,6 @@ exports = module.exports = function (req, res) {
 
 	getPost({slug: req.params.slug})
 		.then(post => {
-			console.log('post: ', post);
 			locals.data.post = post;
 			view.render('post');
 		})

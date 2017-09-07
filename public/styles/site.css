@@ -6210,7 +6210,7 @@ body {
     top: -50px;
     width: 110%;
     -webkit-filter: blur(25px);
-    filter: blur(25px) opacity(50%); }
+    filter: blur(25px) opacity(90%); }
   #post .image-container .image-wrapper {
     z-index: 1; }
     #post .image-container .image-wrapper img {
