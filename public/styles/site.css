@@ -6183,6 +6183,8 @@ body {
 
 #post .content {
   min-height: 350px; }
+  #post .content h1, #post .content h2, #post .content h3, #post .content h4, #post .content h5, #post .content h6 {
+    color: #455F70; }
 
 #post .headings {
   margin-bottom: 1em; }
@@ -6209,7 +6211,7 @@ body {
     position: absolute;
     top: -50px;
     width: 110%;
-    -webkit-filter: blur(25px);
+    -webkit-filter: blur(25px) opacity(90%);
     filter: blur(25px) opacity(90%); }
   #post .image-container .image-wrapper {
     z-index: 1; }
