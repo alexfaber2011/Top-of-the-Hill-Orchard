@@ -4,7 +4,28 @@ include ../mixins/separators
 
 block content
 	#home
-		#photos.container
+		#landing.container
+			h1 Pick your own apples. Make memories.
+				br 
+				| Enjoy our wholesome, rural orchard
+			button.btn.btn-secondary Check Apple Availability
+		#photos.container.hidden-md-down
+			#photo-1.photo
+				.image-wrapper
+					img.background(src="https://c.stocksy.com/a/iyx100/z0/468888.jpg")
+					img.main(src="https://c.stocksy.com/a/iyx100/z0/468888.jpg")
+			#photo-2.photo
+				.image-wrapper
+					img.background(src="https://c.stocksy.com/a/iyx100/z0/468888.jpg")
+					img.main(src="https://c.stocksy.com/a/iyx100/z0/468888.jpg")
+			#photo-3.photo
+				.image-wrapper
+					img.background(src="https://c.stocksy.com/a/iyx100/z0/468888.jpg")
+					img.main(src="https://c.stocksy.com/a/iyx100/z0/468888.jpg")
+			#photo-4.photo
+				.image-wrapper
+					img.background(src="https://c.stocksy.com/a/iyx100/z0/468888.jpg")
+					img.main(src="https://c.stocksy.com/a/iyx100/z0/468888.jpg")
 		+page-title('Welcome')
 		.content
 			.container
