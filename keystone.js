@@ -41,6 +41,16 @@ keystone.set('locals', {
 	editable: keystone.content.editable,
 });
 
+// Configure Cloudinary
+keystone.set('cloudinary config', {
+	cloud_name: 'anzaborrego',
+	api_key: process.env.CLOUDINARY_API_KEY_ANZABORREGO,
+	api_secret: process.env.CLOUDINARY_API_SECRET_ANZABORREGO,
+});
+keystone.set('cloudinary prefix', 'top-of-the-hill-orchard');
+keystone.set('cloudinary folders', true);
+keystone.set('cloudinary secure', true);
+
 // Load your project's Routes
 keystone.set('routes', require('./routes'));
 
