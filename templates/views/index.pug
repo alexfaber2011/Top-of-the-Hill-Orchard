@@ -8,7 +8,8 @@ block content
 			h1 Pick your own apples. Make memories.
 				br 
 				| Enjoy our wholesome, rural orchard
-			button.btn.btn-secondary Check Apple Availability
+			if appleReportPost
+				a(href=`/blog/post/${appleReportPost.slug}`).btn.btn-secondary Check Apple Availability
 		#photos.container.hidden-md-down
 			#photo-1.photo
 				.image-wrapper

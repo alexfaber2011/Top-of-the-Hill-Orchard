@@ -58,4 +58,33 @@ function getPost (query) {
 	});
 }
 
-module.exports = { getPage, enrichPaginationReponse, getPageByCategory, getPost };
+function getRecentAppleReport (state) {
+	return new Promise((resolve, reject) => {
+		getCategory({ name: 'Apple Availability' })
+			.then(category => {
+				const q = keystone.list('Post').model.find()
+				if (state) {
+					q.where('state', state);
+				}
+				return q.where('categories')
+								.in([category._id])
+								.sort('-publishedDate')
+								.limit(1)
+								.exec();
+			})
+			.then(posts => {
+				resolve(_.first(posts));
+			}, err => {
+				reject(err);
+			})
+			.catch(err => {
+				reject(err)
+			});
+	});
+}
+
+module.exports = { getPage,
+									 enrichPaginationReponse,
+									 getPageByCategory,
+									 getPost,
+								 	 getRecentAppleReport, };

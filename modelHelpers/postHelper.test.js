@@ -1,4 +1,5 @@
 const keystone = require('keystone');
+const moment = require('moment');
 const expect = require('chai').expect;
 const _ = require('lodash');
 const { deleteAllDocuments,
@@ -7,7 +8,8 @@ const { deleteAllDocuments,
 const { enrichPaginationReponse,
         getPage,
         getPageByCategory,
-        getPost, } = require('./postHelper');
+        getPost,
+        getRecentAppleReport, } = require('./postHelper');
 
 const EXAMPLE_POST = {
   "_id": "59372fc83f804c7a8ed864ba",
@@ -235,6 +237,31 @@ describe('Post Helper', () => {
           })
           .catch(err => {
             console.log('err: ', err);
+            expect.fail();
+            return
+          });
+      });
+    });
+
+    describe('getRecentAppleReport()', () => {
+      it('should return the most recently published Apple Availability', () => {
+        insertCategory('Apple Availability', keystone)
+          .then(category => {
+            return Promise.all([
+              insertNPosts(5, { categories: [category._id], state: 'published', publishedDate: new Date('2017-01-01') }, keystone),
+              insertNPosts(1, { categories: [category._id], state: 'draft', publishedDate: new Date('2017-01-03') }, keystone),
+              insertNPosts(1, { categories: [category._id], state: 'published', publishedDate: new Date('2017-01-02') }, keystone),
+            ]);
+          })
+          .then(() => {
+            return getRecentAppleReport('published');
+          })
+          .then(post => {
+            expect(moment(post.publishedDate).isSame(new Date('2017-01-02'))).to.be.true;
+            return
+          })
+          .catch(err => {
+            console.error('caught an error: ', err);
             expect.fail();
             return
           });
