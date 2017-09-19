@@ -2,6 +2,9 @@ var keystone = require('keystone');
 const _ = require('lodash');
 const { getAllCategories } = require('../../modelHelpers/postCategoryHelper');
 const { getPageByCategory } = require('../../modelHelpers/postHelper');
+const cloudinary = require('cloudinary');
+
+cloudinary.config({ cloud_name: 'anzaborrego' });
 
 /**
  * extractPageNumber - grabs the page number from query params
@@ -19,6 +22,24 @@ function generatePageNumbers (pageNumbers, currentPage) {
 			number: pageNumber,
 			isActive: currentPage === pageNumber,
 		}
+	});
+}
+
+
+/**
+ * transformImages - given a posts array, this function will transform the cloudinary
+ * url to request image sizes that are small and of good quality (but no more) to
+ * enable faster load times
+ *
+ * @param  {Array<Posts>} posts an array of blog posts (objects)
+ * @return {Array<Posts>}       an array of blog posts (objects)
+ */
+function transformImages (posts) {
+	return _.map(posts, (post) => {
+		const publicId = _.get(post, ['image', 'public_id']);
+		return publicId
+			? _.set(post, ['image', 'secure_url'], cloudinary.url(publicId, { width: 200, angle: 'exif', quality: 'auto:good', secure: true }))
+			: post;
 	});
 }
 
@@ -52,7 +73,7 @@ exports = module.exports = function (req, res) {
 		locals.data.pageNumbers = generatePageNumbers(paginatedPosts.pages, pageNumber);
 		locals.data.nextPageNumber = pageNumber >= paginatedPosts.totalPages ? null : pageNumber + 1;
 		locals.data.categories = categories;
-		locals.data.posts = paginatedPosts.results;
+		locals.data.posts = transformImages(paginatedPosts.results);
 		locals.data.postSeparatorText = `${paginatedPosts.total} blog ${paginatedPosts.total === 1 ? 'entry' : 'entries'}`;
 		// Render the view
 		view.render('blog');

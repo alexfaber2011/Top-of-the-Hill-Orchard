@@ -2,7 +2,9 @@ var keystone = require('keystone');
 const { getPhotos } = require('../../modelHelpers/landingPagePhotoHelper');
 const { getRecentAppleReport } = require('../../modelHelpers/postHelper');
 const _ = require('lodash');
-const { useExifAngle } = require('../../utilities/imageService');
+const cloudinary = require('cloudinary');
+
+cloudinary.config({ cloud_name: 'anzaborrego' });
 
 exports = module.exports = function (req, res) {
 
@@ -26,19 +28,19 @@ exports = module.exports = function (req, res) {
 		getRecentAppleReport('published'),
 	])
 	.then(([photos, appleReportPost]) => {
-		//Merge the photos into locals
+		// Merge the photos into locals
 		_.merge(locals.securePhotoUrls, _.reduce(photos, (acc, photo) => {
-			const url = useExifAngle(_.get(photo, ['image', 'public_id']));
+			const url = cloudinary.url(_.get(photo, ['image', 'public_id']), { width: 265, angle: 'exif', quality: 'auto:good', secure: true });
 			return _.set(acc, _.get(photo, 'number'), url);
 		}, {}));
 
-		//set the apple report post accordingly
-		locals.appleReportPost = appleReportPost
+		// set the apple report post accordingly
+		locals.appleReportPost = appleReportPost;
 		view.render('index');
 	})
 	.catch(err => {
 		console.error('unable to get photos or recent apple report: ', err);
-		//TODO respond with a proper message
+		// TODO respond with a proper message
 		view.render('index');
 	});
 };
