@@ -40,8 +40,9 @@ html
 
 		//- HEADER
 		#header: .container(role="navigation")
-			img#logo(src="https://applehillorchard.com/wp-content/themes/apple_hill_orchard/images/apple-hill-orchard-logo.png"
-			   			 height="50px")
+			a(href="/")
+				img#logo(src="https://applehillorchard.com/wp-content/themes/apple_hill_orchard/images/apple-hill-orchard-logo.png"
+			   			 	 height="50px")
 			.links
 				each link in navLinks
 					a(class=(section == link.key ? 'active' : null) href=link.href)= link.label
