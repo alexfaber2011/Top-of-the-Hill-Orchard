@@ -26,6 +26,8 @@ keystone.init({
 	'session': true,
 	'auth': true,
 	'user model': 'User',
+
+	'mongo': process.env.MONGO_URI || "mongodb://localhost/top-of-the-hill-orchard",
 });
 
 // Load your project's Models
