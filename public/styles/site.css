@@ -6219,6 +6219,9 @@ body {
   background: url("../images/apples_2560_o40.jpg");
   background-size: 100% auto;
   background-repeat: no-repeat; }
+  @media (max-width: 575px) {
+    body {
+      background-size: auto 30%; } }
 
 #footer {
   background-color: #455F70;
