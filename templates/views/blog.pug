@@ -27,10 +27,10 @@ block content
 					.categories.col-sm-12
 						.row.justify-content-center
 							div.col-sm-2.category
-								a(href="/blog") All
+								a(href="/blog" class=data.allCategoryActive ? 'active' : '') All
 							each category in data.categories
 								div.col-sm-2.category
-									a(href='/blog/' + category.name)= category.name
+									a(href='/blog/' + category.name class=category.active ? 'active' : '')= category.name
 				+separator(data.postSeparatorText)
 				each post in data.posts
 					+post(post)

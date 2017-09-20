@@ -17,6 +17,10 @@
 		.category {
 			text-align: center;
 			font-size: 0.8em;
+
+			a.active {
+				text-decoration: underline;
+			}
 		}
 	}
 

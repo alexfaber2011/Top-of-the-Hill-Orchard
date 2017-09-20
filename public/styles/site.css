@@ -6177,6 +6177,8 @@ a {
   #blog .categories .category {
     text-align: center;
     font-size: 0.8em; }
+    #blog .categories .category a.active {
+      text-decoration: underline; }
 
 #blog .post {
   display: flex;

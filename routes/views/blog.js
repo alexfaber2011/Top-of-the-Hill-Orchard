@@ -63,6 +63,7 @@ exports = module.exports = function (req, res) {
 		pageNumbers: [],
 		previousPageNumber: pageNumber - 1 || null,
 		nextPageNumber: null,
+		allCategoryActive: true,
 	};
 
 	Promise.all([
@@ -72,7 +73,10 @@ exports = module.exports = function (req, res) {
 	.then(([categories, paginatedPosts]) => {
 		locals.data.pageNumbers = generatePageNumbers(paginatedPosts.pages, pageNumber);
 		locals.data.nextPageNumber = pageNumber >= paginatedPosts.totalPages ? null : pageNumber + 1;
-		locals.data.categories = categories;
+		locals.data.allCategoryActive = _.isNil(_.find(categories, ['name', categoryName]));
+		locals.data.categories = _.map(categories, category => {
+			return _.set(category, 'active', category.name === categoryName);
+		});
 		locals.data.posts = transformImages(paginatedPosts.results);
 		locals.data.postSeparatorText = `${paginatedPosts.total} blog ${paginatedPosts.total === 1 ? 'entry' : 'entries'}`;
 		// Render the view
