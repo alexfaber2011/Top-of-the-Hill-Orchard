@@ -13,6 +13,10 @@ mixin post(post)
 				.post-content
 					a.title(href=`/blog/post/${post.slug}`)= post.title
 					p.date= post.humanReadablePublishedDate
+					if !_.isEmpty(post.categories)
+						p.tags Tags: 
+							each category in post.categories
+								span= category.name
 					p.preview= post.content.brief
 					
 block content
