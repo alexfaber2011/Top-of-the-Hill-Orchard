@@ -37,6 +37,8 @@ keystone.init({
 	'cloudinary prefix': 'top-of-the-hill-orchard',
 	'cloudinary folders': true,
 	'cloudinary secure': true,
+
+	'cookie secret': process.env.TOP_OF_THE_HILL_ORCHARD_COOKIE_SECRET,
 });
 
 // Load your project's Models
