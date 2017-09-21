@@ -12,7 +12,7 @@ var keystone = require('keystone');
 keystone.init({
 	'name': 'Top of the Hill Orchard',
 	'brand': 'Top of the Hill Orchard',
-	'port': process.env.NODE_ENV === 'production' ? 80 : 3000,
+	'port': process.env.NODE_ENV !== 'production' ? 3000 : process.env.PORT,
 
 	'sass': 'public',
 	'static': 'public',
