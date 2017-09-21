@@ -28,6 +28,15 @@ keystone.init({
 	'user model': 'User',
 
 	'mongo': process.env.MONGO_URI || "mongodb://localhost/top-of-the-hill-orchard",
+
+	'cloudinary config': {
+		cloud_name: 'anzaborrego',
+		api_key: process.env.CLOUDINARY_API_KEY_ANZABORREGO,
+		api_secret: process.env.CLOUDINARY_API_SECRET_ANZABORREGO,
+	},
+	'cloudinary prefix': 'top-of-the-hill-orchard',
+	'cloudinary folders': true,
+	'cloudinary secure': true,
 });
 
 // Load your project's Models
@@ -42,16 +51,6 @@ keystone.set('locals', {
 	utils: keystone.utils,
 	editable: keystone.content.editable,
 });
-
-// Configure Cloudinary
-keystone.set('cloudinary config', {
-	cloud_name: 'anzaborrego',
-	api_key: process.env.CLOUDINARY_API_KEY_ANZABORREGO,
-	api_secret: process.env.CLOUDINARY_API_SECRET_ANZABORREGO,
-});
-keystone.set('cloudinary prefix', 'top-of-the-hill-orchard');
-keystone.set('cloudinary folders', true);
-keystone.set('cloudinary secure', true);
 
 // Load your project's Routes
 keystone.set('routes', require('./routes'));
