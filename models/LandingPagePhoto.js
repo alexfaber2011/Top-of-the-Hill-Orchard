@@ -9,8 +9,8 @@ var Types = keystone.Field.Types;
 var LandingPagePhoto = new keystone.List('LandingPagePhoto', {
 	map: { name: 'title' },
 	autokey: { path: 'slug', from: 'title', unique: true },
-	nocreate: true,
-	nodelete: true,
+	nocreate: false,
+	nodelete: false,
 });
 
 LandingPagePhoto.add({
