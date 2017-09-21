@@ -57,6 +57,10 @@ keystone.set('locals', {
 // Load your project's Routes
 keystone.set('routes', require('./routes'));
 
+// Configure how the session is stored if we're in production
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
+	keystone.set('session store', 'mongo');
+}
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
