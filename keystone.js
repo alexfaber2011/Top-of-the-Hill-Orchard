@@ -64,8 +64,9 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging')
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
-	posts: ['posts', 'post-categories'],
-	users: 'users',
+	'posts': ['posts', 'post-categories'],
+	'users': 'users',
+	'Home Page Photos': 'landing-page-photos',
 });
 
 // Start Keystone to connect to your database and initialise the web server
