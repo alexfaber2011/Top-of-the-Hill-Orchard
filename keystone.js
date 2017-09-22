@@ -84,3 +84,7 @@ if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
 
 
 keystone.start();
+
+// Bootstrap stuff
+const { bootstrapPhotos } = require('./modelHelpers/landingPagePhotoHelper');
+bootstrapPhotos();
