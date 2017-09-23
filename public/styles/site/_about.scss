@@ -4,6 +4,9 @@
 	h1 {
 		text-align: center;
 		font-size: 3.5em;
+		@include media-breakpoint-down(sm) {
+			font-size: 2.5em;
+		}
 		padding: 25px 0px 10px 0px;
 	}
 
