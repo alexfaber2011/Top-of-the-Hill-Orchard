@@ -6058,6 +6058,8 @@ a {
       font-size: 1.5em;
       text-align: center;
       margin-bottom: 25px; }
+    #home #landing a {
+      margin-bottom: 1.5em; }
   #home #photos {
     z-index: 2;
     height: 450px;
