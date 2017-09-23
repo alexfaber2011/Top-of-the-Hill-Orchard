@@ -46,6 +46,7 @@ keystone.init({
 	'cloudinary secure': true,
 
 	'cookie secret': process.env.TOP_OF_THE_HILL_ORCHARD_COOKIE_SECRET,
+	'app': app,
 });
 
 // Load your project's Models
