@@ -52,6 +52,7 @@ keystone.set('locals', {
 	env: keystone.get('env'),
 	utils: keystone.utils,
 	editable: keystone.content.editable,
+	isProduction: process.env.NODE_ENV === 'production',
 });
 
 // Load your project's Routes
