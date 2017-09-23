@@ -5,13 +5,6 @@ require('dotenv').config();
 // Require keystone
 var keystone = require('keystone');
 
-const express = require('express');
-var sslRedirect = require('heroku-ssl-redirect');
-const app = express();
-
-
-app.use(sslRedirect());
-
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
 // and documentation.
@@ -46,7 +39,6 @@ keystone.init({
 	'cloudinary secure': true,
 
 	'cookie secret': process.env.TOP_OF_THE_HILL_ORCHARD_COOKIE_SECRET,
-	'app': app,
 });
 
 // Load your project's Models
