@@ -46,6 +46,10 @@ html.main
 			
 	//- HTML BODY
 	body
+		if _.get(user, 'isAdmin')
+			div(style="height: 21px;")
+			.draft-mode-panel
+				p.text-warning Draft Mode is On *
 
 		//- HEADER
 		#header: .container(role="navigation")
@@ -77,9 +81,17 @@ html.main
 		//- FOOTER
 		#footer
 			p Designed, validated, built, and tested by Alex Faber
-			p
-				a(href="/keystone/signin") admin login
-
+			if _.get(user, 'isAdmin')
+				p currently logged as: 
+					i= `${user.name.first} ${user.name.last}` 
+				p
+					a(href="/keystone/")  Return to Admin Interface
+				p.text-warning 
+					b * 
+					| Since you're logged in as an admin, you'll see entities that are draft mode as well
+			else
+				p
+					a(href="/keystone/signin") admin login
 
 		//- JAVASCRIPT
 

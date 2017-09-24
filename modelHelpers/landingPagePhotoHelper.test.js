@@ -35,7 +35,7 @@ function insertPhotos(photoNums) {
   }));
 }
 
-describe.only('Landing Page Photo Helper', () => {
+describe('Landing Page Photo Helper', () => {
 
   describe('bootstrapPhotos()', () => {
 

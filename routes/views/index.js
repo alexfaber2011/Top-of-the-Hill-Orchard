@@ -25,7 +25,7 @@ exports = module.exports = function (req, res) {
 	// Grab the landing page photos and check to see if there's a recently published apple report
 	Promise.all([
 		getPhotos('published'),
-		getRecentAppleReport('published'),
+		getRecentAppleReport(_.get(req, ['user', 'isAdmin']) ? 'draft' : 'published'),
 	])
 	.then(([photos, appleReportPost]) => {
 		// Merge the photos into locals

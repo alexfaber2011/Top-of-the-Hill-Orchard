@@ -93,7 +93,7 @@ describe('Post Helper', () => {
 
     describe('getPage()', () => {
       it('should retreive all 3 posts', () => {
-        return insertNPosts(3, null, keystone).then(() => {
+        return insertNPosts(3, { state: 'published' }, keystone).then(() => {
           return getPage()
             .then((paginationResponse) => {
               expect(paginationResponse.total).to.equal(3);
@@ -107,7 +107,7 @@ describe('Post Helper', () => {
       });
 
       it('should return the first 10 posts (when the collection has 13)', () => {
-        return insertNPosts(13, null, keystone)
+        return insertNPosts(13, { state: 'published' }, keystone)
           .then(() => {
             return getPage()
               .then((paginationResponse) => {
@@ -122,8 +122,8 @@ describe('Post Helper', () => {
       });
 
       it('should return the first 10 published posts (when the collection has 23 total posts)', () => {
-        return insertNPosts(13, {state: 'published'}, keystone)
-          .then(insertNPosts(10, null, keystone))
+        return insertNPosts(13, { state: 'published' }, keystone)
+          .then(insertNPosts(10, { state: 'draft' }, keystone))
           .then(() => {
             return getPage(1, 10, null, 'published')
               .then((paginationResponse) => {
@@ -141,7 +141,7 @@ describe('Post Helper', () => {
       it('should return the first 7 posts with the category of "Recipe"', () => {
         return insertCategory('Recipe', keystone)
           .then((category) => {
-            return insertNPosts(25, {categories: [category._id]}, keystone)
+            return insertNPosts(25, {categories: [category._id], state: 'published' }, keystone)
               .then(() => {
                 return category
               })
@@ -164,8 +164,8 @@ describe('Post Helper', () => {
         return insertCategory('Recipe', keystone)
           .then(category => {
             return Promise.all([
-              insertNPosts(10, {categories: [category._id]}, keystone),
-              insertNPosts(55, null, keystone),
+              insertNPosts(10, {categories: [category._id], state: 'published' }, keystone),
+              insertNPosts(55, { state: 'published' }, keystone),
             ])
             .then(() => category)
           })
@@ -190,7 +190,7 @@ describe('Post Helper', () => {
       it('should get the first 15 posts with a given category game', () => {
         return insertCategory('Recipe', keystone)
           .then((category) => {
-            return insertNPosts(25, {categories: [category._id]}, keystone)
+            return insertNPosts(25, {categories: [category._id], state: 'published' }, keystone)
               .then(() => {
                 return category;
               });
@@ -258,6 +258,29 @@ describe('Post Helper', () => {
           })
           .then(post => {
             expect(moment(post.publishedDate).isSame(new Date('2017-01-02'))).to.be.true;
+            return
+          })
+          .catch(err => {
+            console.error('caught an error: ', err);
+            expect.fail();
+            return
+          });
+      });
+
+      it('should return the most recently saved Apple Availability report, regardless of its state', () => {
+        insertCategory('Apple Availability', keystone)
+          .then(category => {
+            return Promise.all([
+              insertNPosts(5, { categories: [category._id], state: 'published', publishedDate: new Date('2017-01-01') }, keystone),
+              insertNPosts(1, { categories: [category._id], state: 'draft', publishedDate: new Date('2017-01-03') }, keystone),
+              insertNPosts(1, { categories: [category._id], state: 'published', publishedDate: new Date('2017-01-02') }, keystone),
+            ]);
+          })
+          .then(() => {
+            return getRecentAppleReport('draft');
+          })
+          .then(post => {
+            expect(moment(post.publishedDate).isSame(new Date('2017-01-03'))).to.be.true;
             return
           })
           .catch(err => {

@@ -68,7 +68,7 @@ exports = module.exports = function (req, res) {
 
 	Promise.all([
 		getAllCategories(),
-		getPageByCategory(pageNumber, 10, categoryName)
+		getPageByCategory(pageNumber, 10, categoryName, _.get(req, ['user', 'isAdmin']) ? 'draft' : 'published')
 	])
 	.then(([categories, paginatedPosts]) => {
 		locals.data.pageNumbers = generatePageNumbers(paginatedPosts.pages, pageNumber);

@@ -1,6 +1,23 @@
 html.main {
 	background: $blue;
 
+	.draft-mode-panel {
+		z-index: 9999;
+		position: fixed;
+		width: 100%;
+		left: 0;
+		top: 0;
+		background-color: white;
+
+		p {
+			text-align: center;
+			font-size: 0.8em;
+			font-weight: bold;
+			margin: 0;
+			padding: 0;
+		}
+	}
+
 	body {
 		background: url('../images/apples_2560_o40.jpg');
 		background-size: 100% auto;

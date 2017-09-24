@@ -12,23 +12,23 @@ function enrichPaginationReponse (paginatedPosts) {
 }
 
 function getPage (start = 1, count = 10, categoryId, state) {
+	const $or = _.concat([{ state: 'published' }], state === 'draft' ? { state: 'draft' } : []);
 	return new Promise((resolve, reject) => {
 		const Post = keystone.list('Post');
 		const filters = _.merge(
-			{},
-			state ? { state } : null,
-			categoryId ? {'categories': {$in: [categoryId]}} : null
-		)
-    const q = Post.paginate({
-      page: start,
-      perPage: count,
+			{ $or },
+			categoryId ? { categories: { $in: [categoryId] } } : null
+		);
+		const q = Post.paginate({
+			page: start,
+			perPage: count,
 			filters,
-    });
+		});
 		q.sort('-publishedDate')
 		 .populate('author categories')
      .exec((err, paginatedPosts) => {
     	 err ? reject(err) : resolve(enrichPaginationReponse(paginatedPosts));
-      });
+		 });
 	});
 }
 
@@ -59,14 +59,12 @@ function getPost (query) {
 }
 
 function getRecentAppleReport (state) {
+	const $or = _.concat([{ state: 'published' }], state === 'draft' ? { state: 'draft' } : []);
 	return new Promise((resolve, reject) => {
 		getCategory({ name: 'Apple Availability' })
 			.then(category => {
 				if (category) {
-					const q = keystone.list('Post').model.find()
-					if (state) {
-						q.where('state', state);
-					}
+					const q = keystone.list('Post').model.find({ $or })
 					return q.where('categories')
 									.in([category._id])
 									.sort('-publishedDate')
