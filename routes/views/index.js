@@ -40,7 +40,6 @@ exports = module.exports = function (req, res) {
 	})
 	.catch(err => {
 		console.error('unable to get photos or recent apple report: ', err);
-		// TODO respond with a proper message
 		view.render('index');
 	});
 };

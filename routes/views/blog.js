@@ -83,7 +83,7 @@ exports = module.exports = function (req, res) {
 		view.render('blog');
 	})
 	.catch(err => {
-		//TODO respond with a friendly page
-		console.error('err: ', err);
+		console.error('[blog.js getAllCategories() / getPageByCategory()] err: ', err);
+		view.render('errors/500');
 	})
 };

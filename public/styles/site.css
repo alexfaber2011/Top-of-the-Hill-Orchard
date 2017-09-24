@@ -6225,33 +6225,30 @@ a {
 #blog .post:last-child {
   margin-bottom: 1em; }
 
-html {
+html.main {
   background: #455F70; }
-
-body {
-  background: url("../images/apples_2560_o40.jpg");
-  background-size: 100% auto;
-  background-repeat: no-repeat; }
-  @media (max-width: 575px) {
-    body {
-      background-size: auto 30%; } }
-
-#footer {
-  background-color: #455F70;
-  padding: 1em; }
-  #footer p {
-    font-size: 0.8em;
-    padding: 0em;
-    margin: 0;
-    color: #EBEBEB;
-    text-align: center; }
-    #footer p a {
-      color: #EBEBEB; }
-
-.gallery-image img {
-  display: block;
-  max-width: 100%;
-  height: auto; }
+  html.main body {
+    background: url("../images/apples_2560_o40.jpg");
+    background-size: 100% auto;
+    background-repeat: no-repeat; }
+    @media (max-width: 575px) {
+      html.main body {
+        background-size: auto 30%; } }
+  html.main #footer {
+    background-color: #455F70;
+    padding: 1em; }
+    html.main #footer p {
+      font-size: 0.8em;
+      padding: 0em;
+      margin: 0;
+      color: #EBEBEB;
+      text-align: center; }
+      html.main #footer p a {
+        color: #EBEBEB; }
+  html.main .gallery-image img {
+    display: block;
+    max-width: 100%;
+    height: auto; }
 
 .page-title {
   position: relative; }
@@ -6312,3 +6309,21 @@ body {
     #post .image-container .image-wrapper img {
       width: 100%;
       height: auto; }
+
+html.error {
+  position: relateive;
+  height: 100%;
+  width: 100%; }
+  html.error body {
+    background-color: #EBEBEB;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    display: flex; }
+    html.error body .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center; }
+      html.error body .container .subtitle {
+        font-size: 0.8em; }

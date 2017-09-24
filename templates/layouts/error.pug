@@ -1,0 +1,46 @@
+include ../mixins/flash-messages
+
+doctype html
+html.error
+
+	//- HTML HEADER
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		meta(http-equiv="X-UA-Compatible" content="IE=edge")
+
+		title= title || 'Top of the Hill Orchard'
+		link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
+
+		//- Customise the stylesheet for your site by editing /public/styles/site.sass
+		link(href="/styles/site.css", rel="stylesheet")
+
+		//- Bring Playfair display
+		link(href='https://fonts.googleapis.com/css?family=Playfair+Display:400,700', rel='stylesheet')
+
+		//- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+		//- Safely remove this block if you are not targeting IE8
+		//-[if lt IE 9]
+			script(src="//cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.js")
+			script(src="//cdn.jsdelivr.net/respond/1.4.2/respond.min.js")
+		//-[endif]
+		
+		//- Add google analytics in production
+		if isProduction
+			script(async="", src="https://www.googletagmanager.com/gtag/js?id=UA-41587636-4")
+			script.
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments)};
+				gtag('js', new Date());
+				gtag('config', 'UA-41587636-4');
+
+		//- Include template-specific stylesheets by extending the css block
+		block css
+
+		//- Add any other template-specific HEAD tags by extending the head block
+		block head
+			
+	//- HTML BODY
+	body
+			//- The content block should contain the body of your template's content
+			block content

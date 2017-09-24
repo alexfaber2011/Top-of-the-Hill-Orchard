@@ -28,6 +28,7 @@ exports = module.exports = function (req, res) {
 			view.render('post');
 		})
 		.catch(err => {
-			// TODO respond with a friendly error page
+			console.error('[post.js getPost()] err: ', err);
+			view.render('errors/500');
 		});
 };

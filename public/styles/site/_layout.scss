@@ -1,35 +1,36 @@
-html {
+html.main {
 	background: $blue;
-}
 
-body {
-	background: url('../images/apples_2560_o40.jpg');
-	background-size: 100% auto;
-	@include media-breakpoint-down(xs) {
-		background-size: auto 30%;
+	body {
+		background: url('../images/apples_2560_o40.jpg');
+		background-size: 100% auto;
+		@include media-breakpoint-down(xs) {
+			background-size: auto 30%;
+		}
+		background-repeat: no-repeat;
 	}
-	background-repeat: no-repeat;
-}
 
-#footer {
-	background-color: $blue;
-	padding: 1em;
+	#footer {
+		background-color: $blue;
+		padding: 1em;
 
-	p {
-		font-size: 0.8em;
-		padding: 0em;
-		margin: 0;
-		color: $grey;
-		text-align: center;
-
-		a {
+		p {
+			font-size: 0.8em;
+			padding: 0em;
+			margin: 0;
 			color: $grey;
+			text-align: center;
+
+			a {
+				color: $grey;
+			}
 		}
 	}
-}
 
-.gallery-image img{
-    display: block;
-    max-width: 100%;
-    height: auto;
+	.gallery-image img{
+	    display: block;
+	    max-width: 100%;
+	    height: auto;
+	}
+
 }
