@@ -12,6 +12,10 @@
 		h1 {
 			padding: .5em 0em .2em 0em;
 			color: $blue;
+
+			span {
+				font-style: italic;
+			}
 		}
 
 		h2 {

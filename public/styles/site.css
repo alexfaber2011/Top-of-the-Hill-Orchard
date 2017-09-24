@@ -6207,6 +6207,8 @@ a {
     flex: 1; }
     #blog .post .post-content a.title {
       font-size: 1.1em; }
+      #blog .post .post-content a.title span {
+        font-style: italic; }
     #blog .post .post-content .date {
       font-size: 0.8em;
       color: #B18282;
@@ -6295,6 +6297,8 @@ html.main {
   #post .headings h1 {
     padding: .5em 0em .2em 0em;
     color: #455F70; }
+    #post .headings h1 span {
+      font-style: italic; }
   #post .headings h2 {
     font-size: 1em;
     padding: 0em 0em .2em 0em;

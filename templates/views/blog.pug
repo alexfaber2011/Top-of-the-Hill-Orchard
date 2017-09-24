@@ -12,6 +12,7 @@ mixin post(post)
 							img(src=_.get(post, ['image', 'secure_url']))
 				.post-content
 					a.title(href=`/blog/post/${post.slug}`)= post.title
+						span.text-warning= post.state === 'draft' ? ' Draft' : ''
 					p.date= post.humanReadablePublishedDate
 					if !_.isEmpty(post.categories)
 						p.tags Tags: 
